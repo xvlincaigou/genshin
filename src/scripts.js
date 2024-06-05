@@ -114,8 +114,13 @@ document.addEventListener('DOMContentLoaded', function () {
             videoPlayer.load();
             videoContainer.style.display = 'flex';
             videoPlayer.play();
+            videoPlayer.requestFullscreen({ navigationUI: 'hide' }).catch(err => {
+                console.log('Fullscreen error:', err);
+            });
+
             videoPlayer.onended = function () {
                 videoContainer.style.display = 'none';
+                document.exitFullscreen();
                 resultDisplay.textContent = `中奖号码: ${id}`;
                 resultDisplay.style.display = 'block';
             };
