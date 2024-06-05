@@ -69,3 +69,7 @@ body {
     height: 100%;
     object-fit: cover;
 }
+
+video::-webkit-media-controls-enclosure{ 
+    display: none;
+}
