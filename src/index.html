@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Program</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lottery-screen">
+            <img src="./static/background.png" alt="background" class="background-image">
+            <div class="lottery-buttons">
+                <button id="firstPrizeBtn" class="prize-btn">
+                    <div>一等奖</div>
+                    <div><img src="./static/diamond.webp" alt="prize icon"> x1</div>
+                </button>
+                <button id="secondPrizeBtn" class="prize-btn">
+                    <div>二等奖</div>
+                    <div><img src="./static/diamond.webp" alt="prize icon"> x1</div>
+                </button>
+                <button id="thirdPrizeBtn" class="prize-btn">
+                    <div>三等奖</div>
+                    <div><img src="./static/diamond.webp" alt="prize icon"> x10</div>
+                </button>
+            </div>
+        </div>
+        <div id="videoContainer" class="video-container">
+            <video id="videoPlayer" controls></video>
+        </div>
+        <div id="resultDisplay" class="result-display"></div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

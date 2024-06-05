@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.background-image {
+    width: 100%;
+    height: auto;
+}
+
+.lottery-buttons {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.prize-btn {
+    background: url('./static/button.webp') no-repeat center center;
+    background-size: contain;
+    border: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    width: 160px; /* 根据需要调整宽度 */
+    height: 60px; /* 根据需要调整高度 */
+    color: #333; /* 调整文字颜色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.prize-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.prize-btn div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+#videoPlayer {
+    width: 80%;
+    height: 80%;
+}
+
+.result-display {
+    display: none;
+    font-size: 50px;
+    margin-top: 20px;
+}
