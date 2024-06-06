@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const example2Audio = new Audio('./static/example2.mp4');
     const example3Audio = new Audio('./static/example3.mp4');
     const cardsContainer = document.getElementById('cardsContainer');
+    const mainExitBtn = document.getElementById('mainExitBtn');
+
+    const { ipcRenderer } = require('electron');
 
     const codes = [
         "01A", "01B", "01C", "01D", "01E", "01F", "01G", "01H", "01I", "01J", "01K", "01L",
@@ -85,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "69A", "69B", "69C", "69D", "69E", "69F", "69G", "69H", "69I", "69J", "69K", "69L",
         "70A", "70B", "70C", "70D", "70E", "70F", "70G", "70H", "70I", "70J", "70K", "70L"
     ];  // 将这里的数组初始化为空
-    
+
     let thirdPrizeWinners = new Set();
 
     function getRandomId() {
@@ -180,5 +183,9 @@ document.addEventListener('DOMContentLoaded', function () {
     closeResultDisplay.addEventListener('click', function () {
         resultDisplay.style.display = 'none';
         document.querySelector('.container').style.display = 'block';
+    });
+
+    mainExitBtn.addEventListener('click', () => {
+        ipcRenderer.send('app-quit');
     });
 });

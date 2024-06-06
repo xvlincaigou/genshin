@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow () {
@@ -17,6 +17,10 @@ function createWindow () {
   mainWindow.loadFile('src/index.html');
   mainWindow.once('ready-to-show', () => {
     mainWindow.setFullScreen(true);
+  });
+
+  ipcMain.on('app-quit', () => {
+    app.quit();
   });
 }
 
