@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultText = document.getElementById('resultText');
     const starsContainer = document.getElementById('starsContainer');
     const closeResultDisplay = document.getElementById('closeResultDisplay');
-    const exampleAudio = new Audio('./static/example.mp3');
+    const example1Audio = new Audio('./static/example1.mp4');
+    const example2Audio = new Audio('./static/example2.mp4');
+    const example3Audio = new Audio('./static/example3.mp4');
+    const cardsContainer = document.getElementById('cardsContainer');
 
     const codes = [
         "01A", "01B", "01C", "01D", "01E", "01F", "01G", "01H", "01I", "01J", "01K", "01L",
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "69A", "69B", "69C", "69D", "69E", "69F", "69G", "69H", "69I", "69J", "69K", "69L",
         "70A", "70B", "70C", "70D", "70E", "70F", "70G", "70H", "70I", "70J", "70K", "70L"
     ];  // 将这里的数组初始化为空
-
+    
     let thirdPrizeWinners = new Set();
 
     function getRandomId() {
@@ -96,17 +99,22 @@ document.addEventListener('DOMContentLoaded', function () {
     function playVideoAndDisplayResult(prizeType) {
         let videoFile = '';
         let starCount = 0;
+        let audio;
         switch (prizeType) {
             case 'first':
                 videoFile = './static/1.mp4';
                 starCount = 5;
+                audio = example1Audio;
                 break;
             case 'second':
                 videoFile = './static/2.mp4';
                 starCount = 4;
+                audio = example2Audio;
                 break;
             case 'third':
                 videoFile = './static/3.mp4';
+                starCount = 3; // 三等奖设置为3颗星星
+                audio = example3Audio;
                 break;
         }
 
@@ -120,10 +128,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
             const idArray = Array.from(ids);
-            resultText.innerHTML = idArray.join('<br>');
+            cardsContainer.innerHTML = ''; // 清空卡片容器
+            idArray.forEach(id => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `<div class="number">${id.split('').join('<br>')}</div>`;
+                cardsContainer.appendChild(card);
+            });
+            cardsContainer.style.display = 'flex'; // 显示卡片容器
+            resultText.style.display = 'none'; // 隐藏结果文本
+            document.querySelector('.splash-image').style.display = 'none'; // 隐藏飞溅图片
         } else {
             const id = getRandomId();
             resultText.textContent = id;
+            cardsContainer.style.display = 'none'; // 隐藏卡片容器
+            resultText.style.display = 'block'; // 显示结果文本
+            document.querySelector('.splash-image').style.display = 'block'; // 显示飞溅图片
         }
 
         videoPlayer.src = videoFile;
@@ -138,16 +158,16 @@ document.addEventListener('DOMContentLoaded', function () {
             videoContainer.style.display = 'none';
             document.exitFullscreen();
             resultDisplay.style.display = 'flex';
-            if (prizeType !== 'third') {
-                starsContainer.innerHTML = '';
-                for (let i = 0; i < starCount; i++) {
-                    const star = document.createElement('div');
-                    star.classList.add('star');
-                    star.style.animation = `starFadeIn 1s ${(i + 1)}s forwards`;
-                    starsContainer.appendChild(star);
+            starsContainer.innerHTML = ''; // 清空星星容器
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.animationDelay = `${i * 0.3}s`; // 延迟每颗星星的出现时间
+                starsContainer.appendChild(star);
+                if (i === 0) {
                     setTimeout(() => {
-                        exampleAudio.play();
-                    }, (i + 1) * 1000);
+                        audio.play();
+                    }, (i + 1) * 300);
                 }
             }
         };

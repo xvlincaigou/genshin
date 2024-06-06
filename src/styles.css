@@ -1,17 +1,21 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    overflow: hidden; /* 防止出现滚动条 */
 }
 
 .container {
     position: relative;
     text-align: center;
     color: white;
+    width: 100vw;
+    height: 100vh;
 }
 
 .background-image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover; /* 保证图片覆盖整个容器 */
 }
 
 .lottery-buttons {
@@ -91,24 +95,26 @@ video::-webkit-media-controls-enclosure{
 
 .result-display #resultContent {
     position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 3000; /* 提高文字和星星的层级 */
 }
 
 .splash-image {
-    width: 50%;
-    height: auto;
+    height: 90vh; /* 将高度设置为视口高度 */
+    width: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1000; /* 设置图片层级 */
 }
 
 .result-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 100px;
+    font-size: 120px; /* 调整字体大小 */
+    color: #00BFFF; /* 天蓝色 */
     animation: popIn 1s;
+    z-index: 4000; /* 提高文字的层级 */
 }
 
 @keyframes fadeIn {
@@ -117,17 +123,22 @@ video::-webkit-media-controls-enclosure{
 }
 
 @keyframes popIn {
-    0% { transform: scale(0) translate(-50%, -50%); }
-    100% { transform: scale(1) translate(-50%, -50%); }
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
 }
 
 .stars-container {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* 使星星靠右对齐 */
+    justify-content: center;
     gap: 5px;
+    margin-right: 20px;
+    z-index: 4000; /* 提高星星的层级 */
+    position: absolute; /* 绝对定位 */
+    left: 10%; /* 将星星容器放置在飞溅图片的左侧 */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .star {
@@ -136,11 +147,12 @@ video::-webkit-media-controls-enclosure{
     background: url('./static/star.png') no-repeat center center;
     background-size: contain;
     opacity: 0;
+    animation: starFadeIn 0.3s forwards;
 }
 
 @keyframes starFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 .close-button {
@@ -150,4 +162,33 @@ video::-webkit-media-controls-enclosure{
     cursor: pointer;
     font-size: 20px;
     color: white;
+}
+
+.cards-container {
+    display: none; /* 默认隐藏，只有在抽取三等奖时才显示 */
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* 减小卡片之间的间距 */
+    flex-wrap: nowrap; /* 不换行排列 */
+    width: 70vw; /* 占据页面70%的宽度 */
+    margin: 0 auto; /* 居中显示 */
+}
+
+.card {
+    flex: 1;
+    max-width: 9%; /* 确保十张卡片并排 */
+    height: 40vh; /* 卡片高度 */
+    background: url('./static/card.png') no-repeat center center;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 5vh; /* 调整字体大小 */
+    color: #00BFFF; /* 天蓝色 */
+    z-index: 4000;
+}
+
+.card .number {
+    writing-mode: horizontal-tb; /* 文字垂直排列 */
 }
