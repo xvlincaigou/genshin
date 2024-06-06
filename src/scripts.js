@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoContainer = document.getElementById('videoContainer');
     const videoPlayer = document.getElementById('videoPlayer');
     const resultDisplay = document.getElementById('resultDisplay');
+    const resultText = document.getElementById('resultText');
+    const starsContainer = document.getElementById('starsContainer');
+    const closeResultDisplay = document.getElementById('closeResultDisplay');
+    const exampleAudio = new Audio('./static/example.mp3');
 
     const codes = [
         "01A", "01B", "01C", "01D", "01E", "01F", "01G", "01H", "01I", "01J", "01K", "01L",
@@ -91,43 +95,70 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function playVideoAndDisplayResult(prizeType) {
         let videoFile = '';
+        let starCount = 0;
         switch (prizeType) {
             case 'first':
                 videoFile = './static/1.mp4';
+                starCount = 5;
                 break;
             case 'second':
                 videoFile = './static/2.mp4';
+                starCount = 4;
                 break;
             case 'third':
                 videoFile = './static/3.mp4';
                 break;
         }
 
-        const id = getRandomId();
-        if (!id) return;
-
-        if (prizeType === 'third' && thirdPrizeWinners.has(id)) {
-            playVideoAndDisplayResult(prizeType); // Ensure no duplicate for third prize
+        if (prizeType === 'third') {
+            let ids = new Set();
+            while (ids.size < 10) {
+                const id = getRandomId();
+                if (!thirdPrizeWinners.has(id) && !ids.has(id)) {
+                    ids.add(id);
+                    thirdPrizeWinners.add(id);
+                }
+            }
+            const idArray = Array.from(ids);
+            resultText.innerHTML = idArray.join('<br>');
         } else {
-            if (prizeType === 'third') thirdPrizeWinners.add(id);
-            videoPlayer.src = videoFile;
-            videoPlayer.load();
-            videoContainer.style.display = 'flex';
-            videoPlayer.play();
-            videoPlayer.requestFullscreen({ navigationUI: 'hide' }).catch(err => {
-                console.log('Fullscreen error:', err);
-            });
-
-            videoPlayer.onended = function () {
-                videoContainer.style.display = 'none';
-                document.exitFullscreen();
-                resultDisplay.textContent = `中奖号码: ${id}`;
-                resultDisplay.style.display = 'block';
-            };
+            const id = getRandomId();
+            resultText.textContent = id;
         }
+
+        videoPlayer.src = videoFile;
+        videoPlayer.load();
+        videoContainer.style.display = 'flex';
+        videoPlayer.play();
+        videoPlayer.requestFullscreen({ navigationUI: 'hide' }).catch(err => {
+            console.log('Fullscreen error:', err);
+        });
+
+        videoPlayer.onended = function () {
+            videoContainer.style.display = 'none';
+            document.exitFullscreen();
+            resultDisplay.style.display = 'flex';
+            if (prizeType !== 'third') {
+                starsContainer.innerHTML = '';
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.animation = `starFadeIn 1s ${(i + 1)}s forwards`;
+                    starsContainer.appendChild(star);
+                    setTimeout(() => {
+                        exampleAudio.play();
+                    }, (i + 1) * 1000);
+                }
+            }
+        };
     }
 
     firstPrizeBtn.addEventListener('click', () => playVideoAndDisplayResult('first'));
     secondPrizeBtn.addEventListener('click', () => playVideoAndDisplayResult('second'));
     thirdPrizeBtn.addEventListener('click', () => playVideoAndDisplayResult('third'));
+
+    closeResultDisplay.addEventListener('click', function () {
+        resultDisplay.style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+    });
 });
