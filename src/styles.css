@@ -20,8 +20,8 @@ body {
 
 .lottery-buttons {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 80px; /* 将按钮稍微往上移动 */
+    left: 100px;
     display: flex;
     gap: 10px;
 }
@@ -35,13 +35,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px; /* 将按钮字体稍微变大 */
     cursor: pointer;
-    width: 160px; /* 根据需要调整宽度 */
-    height: 60px; /* 根据需要调整高度 */
+    width: 180px; /* 根据需要调整宽度 */
+    height: 80px; /* 根据需要调整高度 */
     color: #333; /* 调整文字颜色 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
+    font-family: 'Microsoft YaHei', sans-serif; /* 使用微软雅黑字体 */
 }
 
 .prize-btn img {
@@ -112,9 +113,10 @@ video::-webkit-media-controls-enclosure{
 
 .result-text {
     font-size: 120px; /* 调整字体大小 */
-    color: #00BFFF; /* 天蓝色 */
+    color: #666464; /* 字体颜色 */
     animation: popIn 1s;
     z-index: 4000; /* 提高文字的层级 */
+    font-family: 'HanyiWenhei', sans-serif; /* 使用自定义字体 */
 }
 
 @keyframes fadeIn {
@@ -185,8 +187,9 @@ video::-webkit-media-controls-enclosure{
     align-items: center;
     justify-content: center;
     font-size: 5vh; /* 调整字体大小 */
-    color: #00BFFF; /* 天蓝色 */
+    color: #ffffff; /* 字体颜色 */
     z-index: 4000;
+    font-family: 'HanyiWenhei', sans-serif; /* 使用自定义字体 */
 }
 
 .card .number {
